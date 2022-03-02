@@ -2,26 +2,27 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import AddBlog from '@/components/AddBlog'
 import Vuex from 'vuex'
 const localVue = createLocalVue()
+localVue.use(Vuex)
+
 function getStore () {
   const state = {
-    blog: {
-      id: 1,
-      title: 'Hii',
-      description: 'Hello'
-    },
-    blogs: [],
-    count: 1
+    // blog: {
+    //   id: 1,
+    //   title: 'Hii',
+    //   description: 'Hello'
+    // },
+    // blogs: [],
+    // count: 1
   }
   const mutations = {
-    ADD_BLOG (state, blog) {
-      state.blogs = Object.assign({}, blog)
-    }
+    // ADD_BLOG (state, blog) {
+    //   state.blogs = Object.assign({}, blog)
+    // }
   }
   const actions = {
     addBlog: jest.fn()
   }
   const getters = {
-    blogsList: () => state.blogs
   }
   const options = {
     state,
@@ -37,12 +38,14 @@ function getStore () {
   }
 }
 
-localVue.use(Vuex)
+
 describe('AddBlog.vue', () => {
   let wrapper, vm
+  const { store } = getStore()
   beforeEach(() => {
     wrapper = shallowMount(AddBlog, {
-      store: getStore().store
+      localVue,
+      store
     })
     vm = wrapper.vm
   })
@@ -51,22 +54,43 @@ describe('AddBlog.vue', () => {
     expect(vm).toBeTruthy()
   })
   it('should add new blog', () => {
-  //  const submitBlog=jest.fn()
-    // wrapper.find('button').trigger('click')
-    // wrapper.vm.submitBlog()
-    
-    const spy = jest.spyOn(wrapper.vm, 'submitBlog')
-    expect(wrapper.find('button')).toBeTruthy()
-    wrapper.find('button').trigger('click')
-    expect(spy).toHaveBeenCalled()
-    // expect(wrapper.vm.submitBlog()).toBeCalled(vm.$store.actions.addBlog)
-    // expect(spy).toBeCalled(vm.$store.actions.addBlog)
-    spy.mockRestore()
-    // expect(wrapper.vm.submitBlog()).toBeCalled(vm.$store.mutations.ADD_BLOG)
-    // expect(vm.$store.state.blogs).toHaveLength(1)
-    // expect(wrapper.state.blogs).toEqual([{'id': 1, 'title': 'Hii', 'description': 'Hello'}])
-    // expect(wrapper.state.getters.blogsList).toEqual([{'id': 1, 'title': 'Hii', 'description': 'Hello'}])
-    // expect(wrapper.state.getters.blogsList).toHaveLength(1)
+
+    vm.blog = {
+      id: 1,
+      title: 'Hii sai',
+      description: 'Hello'
+    }
+    vm.submitted = false
+    const spy = jest.spyOn(vm, 'addBlog')
+    vm.submitBlog()
+    expect(spy).toBeCalled()
+    expect(spy).toHaveBeenCalledWith(vm.blog)
+    expect(vm.submitted).toEqual(true)
+  })
+  it('should add not add new blog', () => {
+
+    vm.blog = {
+      id: 2,
+      title: 'Hii chaitanya',
+      description: ''
+    }
+    vm.submitted = false
+    const spy = jest.spyOn(vm, 'addBlog')
+    vm.submitBlog()
+    expect(spy).not.toHaveBeenCalled()
+    expect(vm.submitted).toEqual(false)
+  })
+  it('should not add new blog', () => {
+
+    vm.blog = {
+      id: 3,
+      title: 'Hii supriya a a a a a a a a a a a a a',
+      description: 'asfb'
+    }
+    vm.submitted = false
+    const spy = jest.spyOn(vm, 'addBlog')
+    vm.submitBlog()
+    expect(spy).not.toHaveBeenCalled()
+    expect(vm.submitted).toEqual(false)
   })
 })
-

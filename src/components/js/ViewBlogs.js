@@ -1,5 +1,5 @@
 import { mapActions, mapGetters } from 'vuex'
-const Swal = require('sweetalert2')
+import swal from 'sweetalert'
 export default {
   data () {
     return {
@@ -24,7 +24,7 @@ export default {
   methods: {
     ...mapActions(['deleteBlog']),
     activate () {
-      console.log('I am in ')
+      // console.log('I am in ')
       if (this.timeout) {
         clearTimeout(this.timeout)
       }
@@ -34,29 +34,16 @@ export default {
             this.filteredBlogs.push(blog)
           }
         })
-        console.log(this.filteredBlogs)
+        console.log('filter--',this.filteredBlogs)
         return this.filteredBlogs
       }, 2000)
     },
     deletedBlog (id) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'Once deleted cannot be',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
           this.deleteBlog(id)
-        }
-      })
+          swal({
+            text: 'Blog has been edited successfully',
+            icon: 'success'
+          })
     },
     editingBlog (blog) {
       this.$store.state.blog = blog

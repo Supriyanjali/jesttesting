@@ -20,7 +20,6 @@ export default {
     ...mapActions(['addBlog']),
     submitBlog () {
       if (this.blog.title && this.blog.description && this.blog.title.split(' ').length < 10) {
-        console.log(this.blog.title.split(' ').length)
         this.addBlog(this.blog)
 
         swal({

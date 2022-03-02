@@ -8,8 +8,8 @@
             <h2>{{ blog.title.toUpperCase()}}</h2>
             <article>{{blog.description}}</article>
             <div class="button">
-            <button @click="deletedBlog(blog.id)">Delete</button>
-            <button @click="editingBlog(blog)">Edit Blog</button></div>
+            <button id="deleteButton" @click="deletedBlog(blog.id)">Delete</button>
+            <button id="editButton" @click="editingBlog(blog)">Edit Blog</button></div>
         </div>
         </div>
         <div v-else><img src="@/assets/noblog1.jpeg"></div>

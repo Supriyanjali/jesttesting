@@ -8,8 +8,8 @@
         </a>
         <div class="navbar-links">
           <ul>
-            <li><router-link :to="{ path: '/'}" exact>Blogs</router-link></li>
-            <li><router-link :to="{ path: '/add'}" exact>Add  Blog</router-link></li>
+            <li id="view"><router-link :to="{ path: '/'}" exact>Blogs</router-link></li>
+            <li id="add"><router-link :to="{ path: '/add'}" exact>Add  Blog</router-link></li>
           </ul>
         </div>
       </nav>

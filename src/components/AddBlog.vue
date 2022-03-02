@@ -8,7 +8,7 @@
         </div>
         <div class="description">
             <label for="desc">Description <span>*</span></label>
-            <textarea rows="8" type="text" placeholder="Give me the description of your blog...." v-model="blog.description" id="desc" />
+            <textarea rows="8" type="text" id="descriptionName" placeholder="Give me the description of your blog...." v-model="blog.description"  />
         </div>
         <button class="submitButton" v-on:click.prevent="submitBlog">
             ADD BLOG
