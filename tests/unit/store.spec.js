@@ -1,79 +1,101 @@
 import store from '@/store/index'
-jest.mock('@/store/index')
-let state = null
-const TYPE_STRING = 'abcdef'
-const TYPE_INT = 1234
-const TYPE_OBJ = {
-  data1: TYPE_INT,
-  data2: TYPE_STRING,
-  data3: TYPE_STRING
-}
-// const TYPE_EMPTY_ARRAY = []
-const TYPE_ARRAY = [ TYPE_OBJ ]
 
-// // describe('GETTERS store/index.js', () => {
-// //     beforeEach(() => {
-// //         state = {
-// //             blogs: TYPE_ARRAY,
-// //              blog: TYPE_OBJ
-// //         }
-// //       })
-// //     it('getters ', () => {
-// //         state.blogs=TYPE_ARRAY
-// //       expect(store.getters.blogsList(state)).toEqual(TYPE_ARRAY)
-// //     //   expect(store.getters.blogToEdit(state)).toEqual(TYPE_OBJ)
-// //     })
-// //   })
-// describe('ACTIONS store/index.js', () => {
-//   const blog = {
-//     id: 'TYPE_INT',
-//     title: 'TYPE_STRING',
-//     description: 'TYPE_STRING'
-//   }
-//   const commit = jest.fn()
-//   it('action addBlog', () => {
-//     store.actions.addBlog({ commit }, { blog })
-//     expect(commit).toHaveBeenCalledWith('addBlog', blog)
-//   })
-// //   it('action editBlog', () => {
-// //     store.actions.editBlog({ commit }, { blog })
-// //     expect(commit).toHaveBeenCalledWith('editBlog', blog)
-// //   })
-// //   it('action deleteBlog', () => {
-// //     store.actions.deleteBlog({ commit }, { blog })
-// //     expect(commit).toHaveBeenCalledWith('deleteBlog', blog)
-// //   })
-// })
 describe('MUTATIONS store/index.js', () => {
-  beforeEach(() => {
-    state = {
-        blogs: [],
-        blog: TYPE_OBJ,
-        count: 1
-      }
-  })
-  test('mutation ADD_BLOG', () => {
-    const data1 = TYPE_OBJ
-    // const data2 = TYPE_ARRAY
-    store.mutations.ADD_BLOG(state, data1)
-    expect(state.blogs).toBe(TYPE_ARRAY)
-  })
-//   it('mutation DELETE_BLOG', () => {
-//     const blog = {
-//       id: 'TYPE_INT',
-//       title: 'TYPE_STRING',
-//       description: 'TYPE_STRING'
-//     }
-//     store.mutations.DELETE_BLOG(state, blog)
-//     expect(state.blogs.length()).toEqual(state.count - 1)
-//   })
-//   it('mutation EDIT_BLOG', () => {
-//     const blog = {
-//       id: 'TYPE_INT',
-//       title: 'TYPE_STRING',
-//       description: 'TYPE_STRING'
-//     }
-//     store.mutations.EDIT_BLOG(state, blog)
-//     expect(state.blogs.length()).toEqual(state.count)
-//   })
+    const blog = {
+        id: 1,
+        title: 'Hii',
+        description: 'Hello'
+    }
+    const blogs = [{
+        id: 1,
+        title: 'Hii',
+        description: 'Hello'
+    }
+    ]
+    test('ADD_BLOG', () => {
+        store.commit('ADD_BLOG', blog)
+        expect(store.state.blogs).toStrictEqual(blogs)
+    })
+    test('DELETE_BLOG', () => {
+        store.commit('ADD_BLOG', blog)
+        store.commit('DELETE_BLOG', 1)
+        expect(store.state.blogs).toStrictEqual([])
+    })
+    test('EDIT_BLOG', () => {
+        const blog1 = {
+            id: 1,
+            title: 'Hii Supriya',
+            description: 'Hello'
+        }
+        const blogs1 = [{
+            id: 1,
+            title: 'Hii Supriya',
+            description: 'Hello'
+        }]
+        store.commit('ADD_BLOG', blog)
+        expect(store.state.blogs).toStrictEqual(blogs)
+        store.commit('EDIT_BLOG', blog1)
+        expect(store.state.blogs).toStrictEqual(blogs1)
+        // expect(store.state.blog).toStrictEqual(blog1)
+    })
+})
+
+describe('ACTIONS store/index.js', () => {
+    const blog = {
+        id: 2,
+        title: 'Hii Supriya',
+        description: 'Hello Supriya'
+    }
+    test('addBlog', () => {
+        store.dispatch('addBlog', blog)
+        expect(store.state.blogs).toEqual([{
+            id: 1,
+            title: 'Hii',
+            description: 'Hello'
+        }, {
+            id: 2,
+            title: 'Hii Supriya',
+            description: 'Hello Supriya'
+        }])
+    })
+    test('deleteBlog', () => {
+        store.dispatch('deleteBlog', 1)
+        expect(store.state.blogs).toEqual([
+            {
+                id: 2,
+                title: 'Hii Supriya',
+                description: 'Hello Supriya'
+            }])
+    })
+    test('editBlog', () => {
+        const blog1 = {
+            id: 2,
+            title: 'Hii Chaitanya',
+            description: 'Hello Chaitanya'
+        }
+        store.dispatch('editBlog', blog1)
+        expect(store.state.blogs).toEqual([
+            {
+                id: 2,
+                title: 'Hii Chaitanya',
+                description: 'Hello Chaitanya'
+            }])
+    })
+})
+
+describe('GETTERS store/index.js', () => {
+    const blog1 = {
+        id: 1,
+        title: 'Hii',
+        description: 'Hello'
+    }
+    test('blogsList', () => {
+        // store.commit('ADD_BLOG', blog)
+        expect(store.getters.blogsList).toEqual(store.state.blogs)
+    })
+    test('blogtoEdit', () => {
+        store.state.blog = blog1
+        console.log(store.state.blog)
+        expect(store.getters.blogToEdit).toEqual(blog1)
+    })
 })

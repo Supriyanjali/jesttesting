@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-
 Vue.use(Vuex)
+let store = {}
+
 const state = {
   blogs: [],
   count: 1,
   blog: {}
 }
+const plugins = [createPersistedState({
+    storage: window.sessionStorage
+  })]
+
 const mutations = {
   ADD_BLOG (state, blog) {
-    console.log('HIIIII')
+    // console.log('HIIIII')
     state.blogs.push(blog)
     state.count += 1
   },
@@ -20,7 +25,7 @@ const mutations = {
     state.blogs = blogs
   },
   EDIT_BLOG (state, blog) {
-    console.log('Hii23', blog)
+    // console.log('Hii23', blog)
     state.blogs.forEach(b => {
       if (b.id === blog.id) {
         b = blog
@@ -28,8 +33,10 @@ const mutations = {
     })
   }
 }
+
 const actions = {
   addBlog ({commit}, blog) {
+    // console.log('hbjhjhjhjkkjk')
     commit('ADD_BLOG', blog)
   },
   deleteBlog ({commit}, blog) {
@@ -40,27 +47,25 @@ const actions = {
     // console.log('Hii')
     commit('EDIT_BLOG', blog)
   }
- 
 }
-const plugins= [createPersistedState({
-  storage: window.sessionStorage
-})]
 
 const getters = {
   blogsList (state) {
-    console.log('HIIIII')
+    // console.log('HIIIII')
     return state.blogs
   },
   blogToEdit (state) {
+    console.log('HEHE')
     return state.blog
   }
 }
 
-export default {
-  plugins,
+store = new Vuex.Store({
   state,
-  getters,
+  actions,
   mutations,
-  actions
-}
+  getters,
+  plugins
+})
 
+export default store
