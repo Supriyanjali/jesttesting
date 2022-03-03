@@ -42,7 +42,7 @@ const actions = {
     commit("ADD_BLOG", blog);
   },
   deleteBlog({ commit }, blog) {
-    // console.log('Inside action')
+    console.log("Inside action");
     commit("DELETE_BLOG", blog);
   },
   editBlog({ commit }, blog) {
@@ -57,7 +57,7 @@ const getters = {
     return state.blogs;
   },
   blogToEdit(state) {
-    console.log("HEHE");
+    console.log(state.blog);
     return state.blog;
   },
 };

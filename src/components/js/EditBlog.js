@@ -2,6 +2,7 @@ import { mapGetters, mapActions } from "vuex";
 import swal from "sweetalert";
 
 export default {
+  props: ["blog1"],
   data() {
     return {
       blog: this.$store.getters.blogToEdit,
@@ -24,8 +25,8 @@ export default {
           description: this.blog.description,
         };
         this.editBlog(editedBlog);
-        console.log(editedBlog);
-        console.log(this.blogsList);
+        // console.log(editedBlog);
+        // console.log(this.blogsList);
         swal({
           text: "Blog has been edited successfully",
           icon: "success",

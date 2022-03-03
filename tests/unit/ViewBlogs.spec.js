@@ -83,15 +83,21 @@ describe("ViewBlogs.vue", () => {
         description: "Hello",
       },
     ];
-    wrapper.find("#deleteButton").trigger("click");
+    vm.toBeDeleted = false;
+    vm.showModal();
+    expect(vm.toBeDeleted).toBe(true);
     const spy = jest.spyOn(vm, "deleteBlog");
     vm.deletedBlog();
+    expect(vm.toBeDeleted).toBe(false);
     expect(spy).toHaveBeenCalled();
   });
   it("delete method without search", () => {
-    wrapper.find("#deleteButton").trigger("click");
     const spy = jest.spyOn(vm, "deleteBlog");
+    vm.toBeDeleted = false;
+    vm.showModal();
+    expect(vm.toBeDeleted).toBe(true);
     vm.deletedBlog();
+    expect(vm.toBeDeleted).toBe(false);
     expect(spy).toHaveBeenCalled();
   });
   it("editing method", () => {
@@ -108,16 +114,23 @@ describe("ViewBlogs.vue", () => {
       title: "Hii",
       description: "Hello",
     };
-    wrapper.find("#editButton").trigger("click");
+    vm.editingBlog(res);
     expect(vm.$store.state.blog).toEqual(res);
   });
   it("editing method without search", () => {
+    vm.$store.state.blogs = [
+      {
+        id: 1,
+        title: "Hii",
+        description: "Hello",
+      },
+    ];
     const res = {
       id: 1,
       title: "Hii",
       description: "Hello",
     };
-    wrapper.find("#editButton").trigger("click");
+    vm.editingBlog(res);
     expect(vm.$store.state.blog).toEqual(res);
   });
   it("with a search term", () => {
@@ -132,6 +145,6 @@ describe("ViewBlogs.vue", () => {
     vm.activate();
     setTimeout(() => {
       expect(vm.filteredBlogs).toEqual(res);
-    }, 2000);
+    }, 500);
   });
 });

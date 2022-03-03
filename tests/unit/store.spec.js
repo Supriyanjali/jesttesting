@@ -99,7 +99,7 @@ describe("GETTERS store/index.js", () => {
   });
   test("blogtoEdit", () => {
     store.state.blog = blog1;
-    console.log(store.state.blog);
+    // console.log(store.state.blog);
     expect(store.getters.blogToEdit).toEqual(blog1);
   });
 });

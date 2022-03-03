@@ -1,11 +1,15 @@
 import { mapActions, mapGetters } from "vuex";
-import swal from "sweetalert";
+import DeleteModal from "@/components/DeleteModal";
 export default {
+  components: {
+    DeleteModal,
+  },
   data() {
     return {
       search: "",
       timeout: null,
       filteredBlogs: [],
+      toBeDeleted: false,
     };
   },
   directives: {
@@ -39,16 +43,19 @@ export default {
             this.filteredBlogs.push(blog);
           }
         });
-        console.log("filter--", this.filteredBlogs);
+        // console.log("filter--", this.filteredBlogs);
         return this.filteredBlogs;
-      }, 2000);
+      }, 500);
+    },
+    showModal() {
+      this.toBeDeleted = true;
+    },
+    dontShow() {
+      this.toBeDeleted = false;
     },
     deletedBlog(id) {
+      this.toBeDeleted = false;
       this.deleteBlog(id);
-      swal({
-        text: "Blog has been edited successfully",
-        icon: "success",
-      });
     },
     editingBlog(blog) {
       this.$store.state.blog = blog;

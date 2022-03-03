@@ -32,7 +32,7 @@ body {
   position: relative;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: rgb(51, 51, 51);
   color: white;
 }
 

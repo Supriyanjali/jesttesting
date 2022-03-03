@@ -3,9 +3,10 @@
     <h1>Add New Blog</h1>
     <form v-if="!submitted">
       <div class="title">
-        <label for="titleName">Title of Blog <span>*</span></label>
+        <label for="titleName">Title <span>*</span></label>
         <textarea
           type="text"
+          rows="6"
           id="titleName"
           placeholder="Give me the title of your blog...."
           v-model="blog.title"
@@ -14,7 +15,7 @@
       <div class="description">
         <label for="desc">Description <span>*</span></label>
         <textarea
-          rows="8"
+          rows="10"
           type="text"
           placeholder="Give me the description of your blog...."
           v-model="blog.description"
@@ -40,12 +41,6 @@ label {
   display: block;
   margin: 20px 0 10px;
 }
-input[type="text"],
-textarea {
-  display: block;
-  width: 100%;
-}
-
 .submitButton {
   color: white;
   padding: 10px;
@@ -56,6 +51,11 @@ textarea {
 }
 span {
   color: red;
+}
+textarea {
+  border: 1px solid rgb(128, 124, 124);
+  border-radius: 10px;
+  width: 100%;
 }
 @media (max-width: 800px) {
   #add-blog {

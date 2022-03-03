@@ -8,7 +8,7 @@
       placeholder="search blogs"
     />
     <div>
-      <div>
+      <div v-if="blogsListFxn.length > 0">
         <div
           v-for="blog in blogsListFxn"
           :key="blog.id"
@@ -18,16 +18,27 @@
           <h2 v-rainbow>{{ blog.title.toUpperCase() }}</h2>
           <article>{{ blog.description }}</article>
           <div class="button">
-            <button id="deleteButton" @click="deletedBlog(blog.id)">
-              Delete
-            </button>
-            <button id="editButton" @click="editingBlog(blog)">
+            <button class="deleteButton" @click="showModal()">Delete</button>
+            <button class="editButton" @click="editingBlog(blog)">
               Edit Blog
             </button>
           </div>
+          <delete-modal
+            v-if="toBeDeleted"
+            title="Cofirmation to Delete..."
+            id="delete-modal"
+          >
+            <template #default><p>Once Deleted Cannot Be Reverted</p></template>
+            <template #actions
+              ><button class="editButton" @click="dontShow()">Cancel</button
+              ><button class="deleteButton" @click="deletedBlog(blog.id)">
+                Delete Anyway
+              </button></template
+            >
+          </delete-modal>
         </div>
       </div>
-      <!-- <div v-else><img src="@/assets/noblog1.jpeg" /></div> -->
+      <div v-else><img src="@/assets/noblog1.jpeg" /></div>
     </div>
   </div>
 </template>
@@ -38,13 +49,11 @@
   margin: 0 auto;
 }
 .single-blog {
-  padding: 20px;
-  margin: 20px 0;
-  box-sizing: border-box;
-  background: rgb(248, 247, 247);
-  border: 0.5px solid black;
-  border-radius: 10px;
-  box-shadow: 4px 8px #c7c5c5;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+  margin: 2rem auto;
+  max-width: 40rem;
 }
 input[type="text"] {
   display: block;
@@ -52,12 +61,21 @@ input[type="text"] {
   padding: 10px;
   border-radius: 10px;
 }
-button {
+.deleteButton {
   margin-top: 20px;
   color: white;
   padding: 7px;
   margin-left: 5px;
-  background-color: rgb(78, 73, 73);
+  background-color: rgb(196, 52, 52);
+  border: none;
+  border-radius: 10px;
+}
+.editButton {
+  margin-top: 20px;
+  color: white;
+  padding: 7px;
+  margin-left: 5px;
+  background-color: rgb(79, 109, 190);
   border: none;
   border-radius: 10px;
 }
