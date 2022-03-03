@@ -1,43 +1,47 @@
-import swal from 'sweetalert'
-import { mapActions } from 'vuex'
-import PreviewBlog from '@/components/PreviewBlog'
+import swal from "sweetalert";
+import { mapActions } from "vuex";
+import PreviewBlog from "@/components/PreviewBlog";
 export default {
-  data () {
+  data() {
     return {
-      blog:
-      {
-        id: 3,
-        title: '',
-        description: ''
+      blog: {
+        id: this.$store.state.count,
+        title: "",
+        description: "",
       },
-      submitted: false
-    }
+      submitted: false,
+    };
   },
   components: {
-    PreviewBlog
+    PreviewBlog,
   },
   methods: {
-    ...mapActions(['addBlog']),
-    submitBlog () {
-      if (this.blog.title && this.blog.description && this.blog.title.split(' ').length < 10) {
-        this.addBlog(this.blog)
+    ...mapActions(["addBlog"]),
+    submitBlog() {
+      if (
+        this.blog.title &&
+        this.blog.description &&
+        this.blog.title.split(" ").length < 10
+      ) {
+        console.log(this.blog.title.split(" ").length);
+        this.addBlog(this.blog);
 
         swal({
-          text: 'Blog added successfully',
-          icon: 'success'
-        })
-        this.submitted = true
-      } else if (this.blog.title.split(' ').length >= 10) {
+          text: "Blog added successfully",
+          icon: "success",
+        });
+        this.submitted = true;
+      } else if (this.blog.title.split(" ").length >= 10) {
         swal({
-          text: 'Title must not be greater than 10 words',
-          icon: 'warning'
-        })
+          text: "Title must not be greater than 10 words",
+          icon: "error",
+        });
       } else {
         swal({
-          text: 'Fill the details',
-          icon: 'error'
-        })
+          text: "Fill the details",
+          icon: "error",
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
