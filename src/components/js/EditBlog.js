@@ -10,23 +10,24 @@ export default {
   },
   computed: {
     ...mapGetters(["blogsList"]),
+    accept() {
+      return (
+        this.blog.title &&
+        this.blog.description &&
+        this.blog.title.split(" ").length < 10
+      );
+    },
   },
   methods: {
     ...mapActions(["editBlog"]),
     editingBlog() {
-      if (
-        this.blog.title &&
-        this.blog.description &&
-        this.blog.title.split(" ").length < 10
-      ) {
+      if (this.accept) {
         const editedBlog = {
           id: this.blog.id,
           title: this.blog.title,
           description: this.blog.description,
         };
         this.editBlog(editedBlog);
-        // console.log(editedBlog);
-        // console.log(this.blogsList);
         swal({
           text: "Blog has been edited successfully",
           icon: "success",

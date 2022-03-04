@@ -1,19 +1,19 @@
 export default {
   data() {
     return {
-      count: 0,
+      flag: false,
     };
   },
   methods: {
     opens() {
-      if (this.count % 2) {
+      if (!this.flag) {
         document.getElementsByClassName("navbar-links")[0].style.display =
           "inline-block";
       } else {
         document.getElementsByClassName("navbar-links")[0].style.display =
           "none";
       }
-      this.count += 1;
+      this.flag = !this.flag;
     },
   },
 };
