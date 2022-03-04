@@ -1,5 +1,6 @@
 import { mapActions, mapGetters } from "vuex";
 import DeleteModal from "@/components/DeleteModal";
+import _ from "lodash";
 export default {
   components: {
     DeleteModal,
@@ -8,8 +9,9 @@ export default {
     return {
       search: "",
       timeout: null,
-      filteredBlogs: [],
+      blogs: this.$store.state.blogs,
       toBeDeleted: false,
+      filteredBlogs: this.$store.state.blogs,
     };
   },
   directives: {
@@ -23,29 +25,21 @@ export default {
   computed: {
     ...mapGetters(["blogsList"]),
     blogsListFxn() {
-      if (this.search.length === 0) {
-        return this.blogsList;
-      } else {
-        return this.filteredBlogs;
-      }
+      return this.filteredBlogs;
     },
   },
   methods: {
     ...mapActions(["deleteBlog"]),
-    activate() {
-      // console.log('I am in ')
-      if (this.timeout) {
-        clearTimeout(this.timeout);
-      }
-      this.timeout = setTimeout(() => {
-        this.blogsList.filter((blog) => {
-          if (blog.title.includes(this.search)) {
-            this.filteredBlogs.push(blog);
-          }
-        });
-        // console.log("filter--", this.filteredBlogs);
-        return this.filteredBlogs;
-      }, 500);
+    activate: _.debounce(function () {
+      this.searchFunc();
+    }, 2000),
+    searchFunc() {
+      this.filteredBlogs = [];
+      this.blogs.filter((blog) => {
+        if (blog.title.match(this.search)) {
+          this.filteredBlogs.push(blog);
+        }
+      });
     },
     showModal() {
       this.toBeDeleted = true;

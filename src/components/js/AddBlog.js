@@ -15,17 +15,20 @@ export default {
   components: {
     PreviewBlog,
   },
-  methods: {
-    ...mapActions(["addBlog"]),
-    submitBlog() {
-      if (
+  computed: {
+    accept() {
+      return (
         this.blog.title &&
         this.blog.description &&
         this.blog.title.split(" ").length < 10
-      ) {
-        // console.log(this.blog.title.split(" ").length);
+      );
+    },
+  },
+  methods: {
+    ...mapActions(["addBlog"]),
+    submitBlog() {
+      if (this.accept) {
         this.addBlog(this.blog);
-
         swal({
           text: "Blog added successfully",
           icon: "success",
