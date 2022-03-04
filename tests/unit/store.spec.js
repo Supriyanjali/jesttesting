@@ -69,23 +69,23 @@ describe("ACTIONS store/index.js", () => {
       },
     ]);
   });
-  // });
-  test("editBlog", async () => {
-    const blog1 = {
-      id: 2,
-      title: "Hii Chaitanya",
-      description: "Hello Chaitanya",
-    };
-    await store.dispatch("editBlog", blog1);
-    expect(store.state.blogs).toEqual([
-      {
-        id: 2,
-        title: "Hii Chaitanya",
-        description: "Hello Chaitanya",
-      },
-    ]);
-  });
 });
+//   test("editBlog", async () => {
+//     const blog1 = {
+//       id: 2,
+//       title: "Hii Chaitanya",
+//       description: "Hello Chaitanya",
+//     };
+//     await store.dispatch("editBlog", blog1);
+//     expect(store.state.blogs).toEqual([
+//       {
+//         id: 2,
+//         title: "Hii Chaitanya",
+//         description: "Hello Chaitanya",
+//       },
+//     ]);
+//   });
+// });
 
 describe("GETTERS store/index.js", () => {
   const blog1 = {

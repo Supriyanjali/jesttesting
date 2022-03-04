@@ -32,7 +32,7 @@ export default {
     ...mapActions(["deleteBlog"]),
     activate: _.debounce(function () {
       this.searchFunc();
-    }, 2000),
+    }, 500),
     searchFunc() {
       this.filteredBlogs = [];
       this.blogs.filter((blog) => {

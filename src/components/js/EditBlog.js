@@ -2,7 +2,6 @@ import { mapGetters, mapActions } from "vuex";
 import swal from "sweetalert";
 
 export default {
-  props: ["blog1"],
   data() {
     return {
       blog: this.$store.getters.blogToEdit,

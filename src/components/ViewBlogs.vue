@@ -8,7 +8,7 @@
       placeholder="search blogs"
     />
     <div>
-      <div>
+      <div v-if="blogsListFxn.length > 0">
         <div
           v-for="blog in blogsListFxn"
           :key="blog.id"
@@ -38,7 +38,7 @@
           </delete-modal>
         </div>
       </div>
-      <!-- <div v-else><img src="@/assets/searching.jpeg" /></div> -->
+      <div v-else><img src="@/assets/noblog1.jpeg" /></div>
     </div>
   </div>
 </template>

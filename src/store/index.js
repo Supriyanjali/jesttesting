@@ -27,13 +27,13 @@ const mutations = {
     state.blogs = blogs;
   },
   EDIT_BLOG(state, blog) {
-    console.log("Hii23", blog);
+    // console.log("Hii23", blog);
     state.blogs.forEach((b) => {
       if (b.id === blog.id) {
         b = blog;
       }
     });
-    console.log("Hi", state.blogs);
+    // console.log("Hi", state.blogs);
   },
 };
 
@@ -58,7 +58,7 @@ const getters = {
     return state.blogs;
   },
   blogToEdit(state) {
-    console.log(state.blog);
+    // console.log(state.blog);
     return state.blog;
   },
 };

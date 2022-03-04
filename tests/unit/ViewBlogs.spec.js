@@ -76,13 +76,6 @@ describe("ViewBlogs.vue", () => {
   });
   it("delete method", () => {
     vm.search = "H";
-    vm.filteredBlogs = [
-      {
-        id: 1,
-        title: "Hii",
-        description: "Hello",
-      },
-    ];
     vm.toBeDeleted = false;
     vm.showModal();
     expect(vm.toBeDeleted).toBe(true);
@@ -102,13 +95,6 @@ describe("ViewBlogs.vue", () => {
   });
   it("editing method", () => {
     vm.search = "H";
-    vm.filteredBlogs = [
-      {
-        id: 1,
-        title: "Hii",
-        description: "Hello",
-      },
-    ];
     const res = {
       id: 1,
       title: "Hii",
@@ -118,13 +104,6 @@ describe("ViewBlogs.vue", () => {
     expect(vm.$store.state.blog).toEqual(res);
   });
   it("editing method without search", () => {
-    vm.$store.state.blogs = [
-      {
-        id: 1,
-        title: "Hii",
-        description: "Hello",
-      },
-    ];
     const res = {
       id: 1,
       title: "Hii",
