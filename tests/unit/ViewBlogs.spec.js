@@ -112,18 +112,18 @@ describe("ViewBlogs.vue", () => {
     vm.editingBlog(res);
     expect(vm.$store.state.blog).toEqual(res);
   });
-  it("with a search term", () => {
-    vm.search = "H";
-    const res = [
-      {
-        id: 1,
-        title: "Hii",
-        description: "Hello",
-      },
-    ];
-    vm.activate();
-    setTimeout(() => {
-      expect(vm.filteredBlogs).toEqual(res);
-    }, 500);
-  });
+  // it("with a search term", () => {
+  //   vm.search = "H";
+  //   const res = [
+  //     {
+  //       id: 1,
+  //       title: "Hii",
+  //       description: "Hello",
+  //     },
+  //   ];
+  //   vm.activate();
+  //   setTimeout(() => {
+  //     expect(vm.filteredBlogs).toEqual(res);
+  //   }, 500);
+  // });
 });

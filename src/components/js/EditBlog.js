@@ -4,11 +4,15 @@ import swal from "sweetalert";
 export default {
   data() {
     return {
-      blog: this.$store.getters.blogToEdit,
+      blog: {},
     };
+  },
+  mounted() {
+    this.blog = this.blogToEdit;
   },
   computed: {
     ...mapGetters(["blogsList"]),
+    ...mapGetters(["blogToEdit"]),
     accept() {
       return (
         this.blog.title &&

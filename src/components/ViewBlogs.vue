@@ -16,20 +16,27 @@
           class="single-blog"
         >
           <h2 v-rainbow>{{ blog.title.toUpperCase() }}</h2>
-          <div class="descript">
-            <span class="text" v-if="blog.description.length > 40">
-              {{ blog.description.substring(1, 40) }}<span id="dots">... </span
-              ><span id="more">{{ blog.description.substring(41) }}</span>
+          <div v-if="blog.description.length > 40" class="text">
+            <span v-if="!readMore[blog.id]">
+              {{ blog.description.substring(0, 40) + ".." }}
             </span>
-            <span v-else>{{ blog.description }}</span>
+            <span v-if="readMore[blog.id]">{{ blog.description }}</span>
             <span
-              v-if="blog.description.length > 20"
-              @click="myFunction()"
-              id="myBtn"
+              @click="showMore(blog.id)"
+              v-if="!readMore[blog.id]"
+              class="myBtn"
             >
-              Read more
+              Show more
+            </span>
+            <span
+              @click="showLess(blog.id)"
+              v-if="readMore[blog.id]"
+              class="myBtn"
+            >
+              Show less
             </span>
           </div>
+          <div v-else>{{ blog.description }}</div>
           <div class="button">
             <button class="deleteButton" @click="showModal()">Delete</button>
             <button class="editButton" @click="editingBlog(blog)">
@@ -37,7 +44,7 @@
             </button>
           </div>
           <delete-modal
-            v-if="toBeDeleted"
+            v-if="toShowModel"
             title="Cofirmation to Delete..."
             id="delete-modal"
           >
@@ -64,7 +71,7 @@
 .single-blog {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  padding: 1rem;
+  padding: 20px;
   margin-top: 2rem;
   max-width: 40rem;
 }
@@ -101,16 +108,17 @@ img {
   margin: auto;
   margin-top: 200px;
 }
-#myBtn {
+.myBtn {
   color: rgb(63, 154, 207);
+  display: inline;
 }
 .descript {
   display: inline;
 }
-/* .text {
-  inline-size: 700px;
+.text {
+  inline-size: 600px;
   overflow-wrap: break-word;
-} */
+}
 @media (max-width: 800px) {
   #show-blogs {
     display: flex;

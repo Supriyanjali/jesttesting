@@ -1,7 +1,6 @@
 import { mapActions, mapGetters } from "vuex";
 import DeleteModal from "@/components/DeleteModal";
 import _ from "lodash";
-import swal from "sweetalert";
 export default {
   components: {
     DeleteModal,
@@ -10,9 +9,10 @@ export default {
     return {
       search: "",
       timeout: null,
-      blogs: this.$store.state.blogs,
-      toBeDeleted: false,
-      filteredBlogs: this.$store.state.blogs,
+      readMore: {},
+      blogs: [],
+      toShowModel: false,
+      filteredBlogs: [],
     };
   },
   directives: {
@@ -24,11 +24,11 @@ export default {
     },
   },
   mounted() {
-    document.getElementById("more").style.display = "none";
+    this.blogs = this.blogsList;
+    this.filteredBlogs = this.blogsList;
   },
   computed: {
     ...mapGetters(["blogsList"]),
-    ...mapGetters(["blogToEdit"]),
     blogsListFxn() {
       return this.filteredBlogs;
     },
@@ -50,34 +50,22 @@ export default {
         }
       });
     },
-    myFunction() {
-      var dots = document.getElementById("dots");
-      var moreText = document.getElementById("more");
-      var btnText = document.getElementById("myBtn");
-      if (dots.style.display === "none") {
-        dots.style.display = "inline";
-        btnText.innerHTML = "Read more";
-        moreText.style.display = "none";
-      } else {
-        dots.style.display = "none";
-        btnText.innerHTML = "Read less";
-        moreText.style.display = "inline";
-      }
+    showMore(id) {
+      this.$set(this.readMore, id, true);
+    },
+    showLess(id) {
+      this.$set(this.readMore, id, false);
     },
     showModal() {
-      this.toBeDeleted = true;
+      this.toShowModel = true;
     },
     dontShow() {
-      this.toBeDeleted = false;
+      this.toShowModel = false;
     },
-    async deletedBlog(id) {
-      this.toBeDeleted = false;
+    deletedBlog(id) {
       this.deleteBlog(id);
-      swal({
-        text: "Blog has been deleted successfully",
-        icon: "success",
-      });
-      location.reload();
+      this.toShowModel = false;
+      window.location.reload();
     },
     editingBlog(blog) {
       this.$store.state.blog = blog;
