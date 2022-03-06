@@ -26,14 +26,16 @@ const mutations = {
     blogs = blogs.filter((eachblog) => eachblog.id !== id);
     state.blogs = blogs;
   },
+  GET_BLOGS(state) {
+    return state.blogs;
+  },
   EDIT_BLOG(state, blog) {
-    // console.log("Hii23", blog);
-    state.blogs.forEach((b) => {
+    for (let b in state.blogs) {
       if (b.id === blog.id) {
         b = blog;
+        break;
       }
-    });
-    // console.log("Hi", state.blogs);
+    }
   },
 };
 
@@ -43,12 +45,14 @@ const actions = {
     commit("ADD_BLOG", blog);
   },
   deleteBlog({ commit }, blog) {
-    console.log("Inside action");
     commit("DELETE_BLOG", blog);
   },
   editBlog({ commit }, blog) {
     // console.log('Hii')
     commit("EDIT_BLOG", blog);
+  },
+  getBlogs({ commit }) {
+    commit("GET_BLOGS");
   },
 };
 

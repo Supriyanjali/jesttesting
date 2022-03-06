@@ -54,8 +54,8 @@ span {
 }
 textarea {
   border: 1px solid rgb(128, 124, 124);
-  border-radius: 10px;
   width: 100%;
+  padding: 10px;
 }
 @media (max-width: 800px) {
   #add-blog {
@@ -71,6 +71,9 @@ textarea {
   .submitButton {
     width: fit-content;
     margin: 20px auto;
+  }
+  textarea {
+    font-size: 80%;
   }
 }
 </style>

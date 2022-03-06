@@ -1,10 +1,12 @@
 <template>
   <div>
-    <h3>Thanks for adding the post</h3>
+    <h2>Thanks for adding the post</h2>
     <div id="preview">
       <h3>Preview Blog</h3>
-      <p>Blog Title:{{ blog.title }}</p>
-      <p>Blog Description:{{ blog.description }}</p>
+      <h5>Blog Title:</h5>
+      <p>{{ blog.title }}</p>
+      <h5>Blog Description:</h5>
+      <p class="ow">{{ blog.description }}</p>
     </div>
     <button class="submitButton" @click="other">Add Other</button>
   </div>
@@ -34,5 +36,10 @@ export default {
   background-color: rgb(42, 43, 44);
   border: 2px solid white;
   border-radius: 5px;
+}
+.ow {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 </style>

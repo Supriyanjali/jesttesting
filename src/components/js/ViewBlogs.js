@@ -1,6 +1,7 @@
 import { mapActions, mapGetters } from "vuex";
 import DeleteModal from "@/components/DeleteModal";
 import _ from "lodash";
+import swal from "sweetalert";
 export default {
   components: {
     DeleteModal,
@@ -22,8 +23,12 @@ export default {
       },
     },
   },
+  mounted() {
+    document.getElementById("more").style.display = "none";
+  },
   computed: {
     ...mapGetters(["blogsList"]),
+    ...mapGetters(["blogToEdit"]),
     blogsListFxn() {
       return this.filteredBlogs;
     },
@@ -32,14 +37,32 @@ export default {
     ...mapActions(["deleteBlog"]),
     activate: _.debounce(function () {
       this.searchFunc();
-    }, 500),
+    }, 2000),
     searchFunc() {
+      console.log("Hii");
       this.filteredBlogs = [];
       this.blogs.filter((blog) => {
-        if (blog.title.match(this.search)) {
+        if (
+          blog.title.match(this.search) ||
+          blog.description.match(this.search)
+        ) {
           this.filteredBlogs.push(blog);
         }
       });
+    },
+    myFunction() {
+      var dots = document.getElementById("dots");
+      var moreText = document.getElementById("more");
+      var btnText = document.getElementById("myBtn");
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "Read more";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Read less";
+        moreText.style.display = "inline";
+      }
     },
     showModal() {
       this.toBeDeleted = true;
@@ -47,9 +70,14 @@ export default {
     dontShow() {
       this.toBeDeleted = false;
     },
-    deletedBlog(id) {
+    async deletedBlog(id) {
       this.toBeDeleted = false;
       this.deleteBlog(id);
+      swal({
+        text: "Blog has been deleted successfully",
+        icon: "success",
+      });
+      location.reload();
     },
     editingBlog(blog) {
       this.$store.state.blog = blog;

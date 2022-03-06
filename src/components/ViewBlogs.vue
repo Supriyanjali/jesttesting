@@ -16,7 +16,20 @@
           class="single-blog"
         >
           <h2 v-rainbow>{{ blog.title.toUpperCase() }}</h2>
-          <article>{{ blog.description }}</article>
+          <div class="descript">
+            <span class="text" v-if="blog.description.length > 40">
+              {{ blog.description.substring(1, 40) }}<span id="dots">... </span
+              ><span id="more">{{ blog.description.substring(41) }}</span>
+            </span>
+            <span v-else>{{ blog.description }}</span>
+            <span
+              v-if="blog.description.length > 20"
+              @click="myFunction()"
+              id="myBtn"
+            >
+              Read more
+            </span>
+          </div>
           <div class="button">
             <button class="deleteButton" @click="showModal()">Delete</button>
             <button class="editButton" @click="editingBlog(blog)">
@@ -52,7 +65,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
-  margin: 2rem auto;
+  margin-top: 2rem;
   max-width: 40rem;
 }
 input[type="text"] {
@@ -60,6 +73,10 @@ input[type="text"] {
   width: 50%;
   padding: 10px;
   border-radius: 10px;
+}
+.text {
+  inline-size: 150px;
+  overflow-wrap: break-word;
 }
 .deleteButton {
   margin-top: 20px;
@@ -84,6 +101,16 @@ img {
   margin: auto;
   margin-top: 200px;
 }
+#myBtn {
+  color: rgb(63, 154, 207);
+}
+.descript {
+  display: inline;
+}
+/* .text {
+  inline-size: 700px;
+  overflow-wrap: break-word;
+} */
 @media (max-width: 800px) {
   #show-blogs {
     display: flex;
@@ -95,14 +122,21 @@ img {
     width: 250px;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 6px #c7c5c5;
+    box-shadow: 2px 2px 2px 2px #c7c5c5;
     height: fit-content;
   }
   .button {
     display: inline;
   }
+  .myBtn {
+    color: rgb(31, 136, 197);
+  }
   h2 {
     color: aqua;
+  }
+  .text {
+    inline-size: 150px;
+    overflow-wrap: break-word;
   }
 }
 </style>
